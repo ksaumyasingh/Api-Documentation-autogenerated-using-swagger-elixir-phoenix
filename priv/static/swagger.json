@@ -1,0 +1,110 @@
+{
+  "definitions": {
+    "User": {
+      "description": "A user of the application",
+      "properties": {
+        "age": {
+          "description": "user age",
+          "type": "string"
+        },
+        "name": {
+          "description": "name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "age",
+        "name"
+      ],
+      "title": "User",
+      "type": "object"
+    }
+  },
+  "host": "localhost:4000",
+  "info": {
+    "title": "My App",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/users": {
+      "post": {
+        "description": "Query for users. This operation supports with paging and filtering",
+        "operationId": "list_users",
+        "parameters": [
+          {
+            "description": "Number of elements per page",
+            "in": "query",
+            "minimum": 1,
+            "name": "page_size",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Number of the page",
+            "in": "query",
+            "minimum": 1,
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Organization ID",
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Address Zip Code",
+            "in": "query",
+            "name": "zipcode",
+            "required": true,
+            "type": "string",
+            "x-example": "90210"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Related resources to include in response",
+            "in": "query",
+            "items": {
+              "enum": [
+                "organisation",
+                "favourites",
+                "purchases"
+              ],
+              "type": "string"
+            },
+            "name": "include",
+            "required": false,
+            "type": "array"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Client Error"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "summary": "Query for users",
+        "tags": [
+          "Users"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0"
+}
